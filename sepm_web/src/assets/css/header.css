@@ -41,6 +41,7 @@
     font-size: .78rem;
 }
 
+
 @media (max-width: 768px){
     .logo_container {
         width: 6vw;

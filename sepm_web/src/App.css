@@ -6,3 +6,7 @@
   --primary-blue: #1D98D4;
   --secondary-color: #E2F3FB;
 }
+
+body {
+  overflow-x: hidden;
+}
