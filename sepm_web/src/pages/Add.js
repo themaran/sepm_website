@@ -17,29 +17,55 @@ function Form() {
   return (
     <>
       <div className='container'>
-        <h2>Add Students</h2>
+        <h3>Add Students</h3>
         <form>
-          <label>Reg. No</label>
-          <input type='phone'></input>
+          <label for='reg'>Reg. No</label>
           <br></br>
-          <label>Reg. No</label>
-          <input type='phone'></input>
+          <input type='phone' name='reg'></input>
           <br></br>
-          <label>Reg. No</label>
-          <input type='phone'></input>
+          <label for='name'>Name</label>
           <br></br>
-          <label>Reg. No</label>
-          <input type='phone'></input>
+          <input type='text' name='name'></input>
           <br></br>
-          <label>Reg. No</label>
-          <input type='phone'></input>
+          <label for="year">Year</label>
           <br></br>
-          <label>Reg. No</label>
-          <input type='phone'></input>
+          <select name="year"placeholder='year' id="year">
+          <option value='choose' disabled selected hidden>Choose</option>
+          <option value="I">I</option>
+          <option value="II">II</option>
+          <option value="III">III</option>
+          <option value="IV">IV</option>
+        </select>
           <br></br>
-          <button></button>
+          <label for='semester'>Semester</label>
           <br></br>
-          <button></button>
+          <select name='semester' id='semester'>
+            <option value='choose' disabled selected hidden>Choose</option>
+            <option value='I'>I</option>
+            <option value='II'>II</option>
+            <option value='III'>III</option>
+            <option value='IV'>IV</option>
+            <option value='V'>V</option>
+            <option value='VI'>VI</option>
+            <option value='VII'>VII</option>
+            <option value='VII'>VIII</option>
+
+          </select>
+          <br></br>
+          <label for='category'>Category</label>
+          <br></br>
+          <select id='category' name='category'>
+            <option value='choose' disabled selected hidden>Choose</option>
+            <option value='A'>A</option>
+            <option value='B+'>B+</option>
+            <option value='B'>B</option>
+            <option value='C'>C</option>
+            </select>
+            <br></br>
+          <br></br>
+          <button>Save and Create another student</button>
+          <br></br>
+          <button>Add</button>
         </form>
       </div>
     </>

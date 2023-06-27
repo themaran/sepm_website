@@ -1,6 +1,50 @@
 .container {
     width: 70vw;
     position: relative;
-    margin-top: 4rem;
+    margin-top: 1rem;
     padding: 1rem 0 0 5rem;
+}
+
+.container form{
+    margin: 40px;
+}
+.container label{
+    margin: 10px;
+}
+.container input{
+    margin-left: 30px;
+    width: 20rem;
+    border: none;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+}
+.container select{
+    margin-left: 30px;
+    width: 20rem;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+.container option{
+    border-radius: 5px;
+}
+.container button{
+    width: 20rem;
+    margin: 30px;
+    padding: 7px;
+    border: none;
+    outline: none;
+    background-color: rgb(45, 132, 203);
+    border-radius: 50px;
+    font-size: 13px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
