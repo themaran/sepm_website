@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Menu } from '../components/Menu';
 import './Addclass.css';
@@ -8,30 +9,36 @@ export function Addclass() {
     <>
       <Header />
       <Menu />
-      <Newclass/>
+      <Newclass />
     </>
   );
 }
 
-function Newclass(){
-  return(
+function Newclass() {
+  return (
     <>
-    <div className='container'>
-      <h3>Add new class</h3>
-      <form>
-      <label for='name'>Batch</label>
+      <div className='container'>
+        <Link to="/classes" className='d-flex align-items-center position link'>
+          <span class="material-symbols-outlined">
+            chevron_left
+          </span>
+          Go back
+        </Link>
+        <h3>Add new class</h3>
+        <form>
+          <label for='name'>Batch</label>
           <br></br>
           <input type='text' name='name' placeholder='i.e 2021 - 2025' required></input>
           <br></br>
           <label for="year">Year</label>
           <br></br>
-          <select name="year"placeholder='year' id="year" required>
-          <option value='choose' disabled selected hidden>Choose</option>
-          <option value="I">I</option>
-          <option value="II">II</option>
-          <option value="III">III</option>
-          <option value="IV">IV</option>
-        </select>
+          <select name="year" placeholder='year' id="year" required>
+            <option value='choose' disabled selected hidden>Choose</option>
+            <option value="I">I</option>
+            <option value="II">II</option>
+            <option value="III">III</option>
+            <option value="IV">IV</option>
+          </select>
           <br></br>
           <label for='semester'>Semester</label>
           <br></br>
@@ -50,9 +57,9 @@ function Newclass(){
           <br></br>
           <button>Add</button>
 
-      </form>
+        </form>
 
-    </div>
+      </div>
     </>
   )
 }

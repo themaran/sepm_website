@@ -6,9 +6,9 @@ export const Menu = () => {
     const [isAdmin, setAdmin] = useState(false);
   return (
     <div className='menu'>
-            <Link to='/'>Home</Link>
-            <Link to='/classes'>Classes</Link>
-            { isAdmin ? <Link to='/user'>Add User</Link> : <></>}
+            <Link className='menu_link' to='/'>Home</Link>
+            <Link className='menu_link' to='/classes'>Classes</Link>
+            { isAdmin ? <Link to='/user' className='menu_link'>Add User</Link> : <></>}
 
             
             <div className='divider d-none d-md-block'></div>

@@ -8,7 +8,7 @@
     box-shadow: 0 1px 1px 1px #e3e3e3;
 }
 
-a {
+.menu_link {
     padding: 1rem;
     padding-left: 1.5rem;
     text-align: start;
@@ -20,7 +20,7 @@ a {
     font-weight: 600;
 }
 
-a:hover {
+.menu_link:hover {
     background-color: #E2F3FB;
     border: 1px solid #1D98D4;
 }

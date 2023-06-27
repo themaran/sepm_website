@@ -4,7 +4,7 @@ import { Menu } from '../components/Menu';
 import './Add.css';
 import React from 'react';
 
-export function Add() {
+export function Edit() {
   return (
     <>
       <Header />
@@ -24,7 +24,7 @@ function Form() {
           </span>
           Go back
         </Link>
-        <h3>Add Students</h3>
+        <h3>Edit Student</h3>
         <form>
           <label for='reg'>Reg. No</label>
           <br></br>
@@ -70,9 +70,8 @@ function Form() {
             </select>
             <br></br>
           <br></br>
-          <button>Save and Create another student</button>
           <br></br>
-          <button>Add</button>
+          <button>Save</button>
         </form>
       </div>
     </>
