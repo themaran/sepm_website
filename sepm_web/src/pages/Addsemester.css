@@ -17,32 +17,6 @@
 #credits{
     width: 120px;
 }
-.container button{
-    width: 120px;
-}
-.container .popover {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-.container .popover .popover-content {
-    visibility: hidden;
-    width: 200px;
-    background-color: #f9f9f9;
-    color: #333;
-    text-align: center;
-    padding: 10px;
-    border-radius: 4px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: visibility 0s, opacity 0.3s ease-in-out;
-}
-  
-.container .popover:hover .popover-content {
-    visibility: visible;
-    opacity: 1;
-  }
+
+
+
