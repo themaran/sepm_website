@@ -1,31 +1,27 @@
 import { Header } from '../components/Header';
 import { Menu } from '../components/Menu';
-import './Add.css';
+import './Addclass.css';
 import React from 'react';
 
-export function Add() {
+export function Addclass() {
   return (
     <>
       <Header />
       <Menu />
-      <Form />
+      <Newclass/>
     </>
   );
 }
 
-function Form() {
-  return (
+function Newclass(){
+  return(
     <>
-      <div className='container'>
-        <h3>Add Students</h3>
-        <form>
-          <label for='reg'>Reg. No</label>
+    <div className='container'>
+      <h3>Add new class</h3>
+      <form>
+      <label for='name'>Batch</label>
           <br></br>
-          <input type='phone' name='reg' placeholder='i.e 812021205013' required></input>
-          <br></br>
-          <label for='name'>Name</label>
-          <br></br>
-          <input type='text' name='name'placeholder='i.e Elamran E' required></input>
+          <input type='text' name='name' placeholder='i.e 2021 - 2025' required></input>
           <br></br>
           <label for="year">Year</label>
           <br></br>
@@ -52,22 +48,11 @@ function Form() {
 
           </select>
           <br></br>
-          <label for='category'>Category</label>
-          <br></br>
-          <select id='category' name='category' required>
-            <option value='choose' disabled selected hidden>Choose</option>
-            <option value='A'>A</option>
-            <option value='B+'>B+</option>
-            <option value='B'>B</option>
-            <option value='C'>C</option>
-            </select>
-            <br></br>
-          <br></br>
-          <button>Save and Create another student</button>
-          <br></br>
           <button>Add</button>
-        </form>
-      </div>
+
+      </form>
+
+    </div>
     </>
   )
 }

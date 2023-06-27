@@ -4,7 +4,6 @@
     margin-top: 1rem;
     padding: 1rem 0 0 5rem;
 }
-
 .container form{
     margin: 40px;
 }
@@ -48,6 +47,10 @@
     color: white;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
-button:hover{
+.container input::placeholder{
+    font-size: 13px;
+    padding-left: 20px;
+}
+button :hover{
     scale: 1.1;
 }
