@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     padding-top: 2rem;
+    position: absolute;
     box-shadow: 0 1px 1px 1px #e3e3e3;
 }
 
