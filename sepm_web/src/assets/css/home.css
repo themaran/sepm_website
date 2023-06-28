@@ -1,0 +1,40 @@
+.card_container {
+    background-color: #E2F3FB;
+    border: 1px solid #1D98D4;
+    padding-bottom: 1rem;
+    border-radius: 8px;
+}
+
+.container_own {
+    position: absolute;
+    right: 0;
+    width: 80vw;
+    margin-top: 5rem;
+}
+
+.year_name {
+    font-size: 3rem;
+    margin: 0;
+    padding: 0;
+    line-height: inherit;
+    font-family: 800;
+}
+
+.year_notation {
+    margin: 0 !important;
+    padding: 0;
+    font-size: .9rem;
+    line-height: 5px;
+    font-family: 'Manrope', Arial, Helvetica, sans-serif !important;
+    font-weight: 600 !important;
+}
+
+.states {
+    font-family: 'Manrope', Arial, Helvetica, sans-serif;
+    font-size: .7rem;
+}
+
+.link {
+    text-decoration: none;
+    font-size: .8rem;
+}
