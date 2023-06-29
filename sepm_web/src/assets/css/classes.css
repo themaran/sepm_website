@@ -17,11 +17,15 @@ h5 {
 }
 
 .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #1D98D4;
     color: #DFE1E5;
     padding: .6rem 1.5rem;
     font-size: .8rem;
     border-radius: 50px;
+    border: none;
     text-decoration: none;
     margin: 0 1rem;
 }
@@ -31,16 +35,15 @@ h5 {
 }
 
 table {
-    width: 90%;
-    table-layout: fixed;
-    border-collapse: collapse;
+    width: 90% !important;
 }
 
 .table_header,
 th,
 thead {
     padding: 0;
-    background-color: #E2F3FB;
+    background-color: #091E42;
+    color: #FAF7F7 !important;
 }
 
 tbody {
@@ -82,6 +85,6 @@ td {
     }
 
     table {
-        width: 100%;
+        width: 100% !important;
     }
 }

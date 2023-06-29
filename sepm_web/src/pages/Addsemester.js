@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Menu } from '../components/Menu';
 import './Addsemester.css';
@@ -16,10 +16,11 @@ export function Addsemester() {
 }
 
 function Newsemester() {
+  const navigate = useNavigate();
   return (
     <>
       <div className='container'>
-        <Link to="/classes" className='d-flex align-items-center position link'>
+      <Link to="/#" className='d-flex align-items-center position link' onClick={()=> navigate(-1)}>
           <span class="material-symbols-outlined">
             chevron_left
           </span>

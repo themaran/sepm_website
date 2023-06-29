@@ -110,13 +110,13 @@ const semester = [{
         'next_semester_name': 'I',
         'next_semester_id': 1,
     }
-  }]
+}]
 
 export const Class = () => {
 
-    const handlePromote = (current_sem)=>{ 
+    const handlePromote = (current_sem) => {
         data[0].current_semester_id = current_sem + 1;
-        data[0].next_semester_id = current_sem + 2; 
+        data[0].next_semester_id = current_sem + 2;
         alert('Class has been promoted. Please refresh the page')
     }
     return (
@@ -136,8 +136,9 @@ export const Class = () => {
                         <h5>{data[0].class_name} YEAR - {data[0].current_semester} SEMESTER</h5>
                         <p className='states mt-3'>Btach: <b>{data[0].batch}</b></p>
                         <p className='states'>Current Semester: <b>{data[0].current_semester} Semester</b></p>
+                        {!canPromote ? <span className='info'>* To calculate next semester CGPA, Kindly create a new semester and calculate CGPA for current semester</span> : <></>}
                     </div>
-                    <div>
+                    <div className='d-flex'>
                         {students.map((student) => {
                             if (!student.is_calculated) {
                                 canPromote = false;
@@ -145,11 +146,23 @@ export const Class = () => {
                         })}
 
                         {canPromote ?
-                            <Link to='#' className='button' onClick={()=>handlePromote(data[0].current_semester_id)}>Promote to {data[0].next_semester} Semester</Link>
+                            <div>
+                                <Link to='#' className='button bg-success' onClick={() => handlePromote(data[0].current_semester_id)}>
+                                    <span class="fs-6 me-1 material-symbols-outlined">
+                                        moving
+                                    </span>
+                                    Promote to {data[0].next_semester} Semester</Link>
+                            </div>
                             :
                             <></>
-                    }
-                        <Link to={'/class/' + data[0].class_name + '/add_student'} className='button'>Add student</Link>
+                        }
+                        <div>
+                            <Link to={'/class/' + data[0].class_name + '/' + data[0].current_semester + '/add_student'} className='button'>
+                                <span class="fs-6 me-1 material-symbols-outlined">
+                                    person_add
+                                </span>
+                                Add student</Link>
+                        </div>
                     </div>
                 </div>
                 <div className='d-flex flex-column mt-5'>
@@ -163,8 +176,6 @@ export const Class = () => {
                                 <th>Action</th>
                             </tr>
                         </thead>
-                    </table>
-                    <table>
                         <tbody>
                             {students.map((year) => {
                                 return (
@@ -175,7 +186,7 @@ export const Class = () => {
                                         <td>{year.cgpa}</td>
                                         <td>
                                             {!year.is_calculated ? <Link to={'/class/' + year.class_name + '/' + year.reg_no + '/calculate'} className='link me-2 text-success'>Caluclate</Link> : <></>}
-                                            <Link to={'/class/' + year.class_name + '/'+ year.reg_no+ '/edit'} className='link'>Edit</Link>
+                                            <Link to={'/class/' + year.class_name + '/' + year.reg_no + '/edit'} className='link'>Edit</Link>
                                         </td>
                                     </tr>
                                 )

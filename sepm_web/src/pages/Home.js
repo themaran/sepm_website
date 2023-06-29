@@ -62,7 +62,7 @@ export const Home = () => {
                   <pre className='states'>Total Students  : <b>{year.total_students}</b></pre>
                   <pre className='states'>All Clears              : <b>{year.all_clears}</b></pre>
                   <pre className='states'>Arrers                    : <b>{year.arrers}</b></pre>
-                  <Link to={'/classes/'+year.class_name} className='align-self-end link'>Manage</Link>
+                  <Link to={'/class/'+year.class_name} className='align-self-end link'>Manage</Link>
                 </div>
               </div>
             )

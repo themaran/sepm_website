@@ -21,7 +21,7 @@
     border-radius: 5px;
 }
 .container select{
-    margin-left: 30px;
+    /* margin-left: 30px; */
     width: 20rem;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -35,7 +35,7 @@
 }
 .container button{
     width: 20rem;
-    margin: 30px;
+    /* margin: 30px; */
     padding: 7px;
     border: none;
     outline: none;
@@ -49,7 +49,6 @@
 }
 .container input::placeholder{
     font-size: 13px;
-    padding-left: 20px;
 }
 button :hover{
     scale: 1.1;

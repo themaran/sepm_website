@@ -15,7 +15,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Home/>}/>
-          <Route path="/class/:class/add_student" element={ <Add/> }/>
+          <Route path="/class/:class/:semester/add_student" element={ <Add/> }/>
           <Route path="/class/:class/:reg_no/edit" element={ <Edit/> }/>
           <Route path="/classes/add_class" element={ <Addclass/> }/>
           <Route path="/add_semester" element={ <Addsemester/> }/>
