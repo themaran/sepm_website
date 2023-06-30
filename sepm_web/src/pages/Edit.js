@@ -14,7 +14,6 @@ export function Edit() {
   return (
     <>
       <Header />
-      <Menu />
       <Form />
     </>
   );

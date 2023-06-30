@@ -53,8 +53,6 @@ export const Classes = () => {
     return (
         <>
             <Header />
-            <Menu />
-
             {showAlert ? 
             <>
                 <div className='alert'>

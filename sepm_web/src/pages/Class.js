@@ -122,7 +122,6 @@ export const Class = () => {
     return (
         <>
             <Header />
-            <Menu />
 
             <div className='container_responsive'>
                 <Link to="/classes" className='d-flex align-items-center position link'>

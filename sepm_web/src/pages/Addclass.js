@@ -8,7 +8,6 @@ export function Addclass() {
   return (
     <>
       <Header />
-      <Menu />
       <Newclass />
     </>
   );
@@ -29,8 +28,11 @@ function Newclass() {
         <form>
           <label for='name'>Batch</label>
           <br></br>
-          <input type='text' name='name' placeholder='i.e 2021 - 2025' required></input>
+          <input type='text' name='name' placeholder='Enter class name' required></input>
+          <br></br><label for='name'>Regulation</label>
           <br></br>
+          <input type='text' name='name' placeholder='Enter Regulation' required></input>
+          <br/>
           <label for="year">Year</label>
           <br></br>
           <select name="year" placeholder='year' id="year" required>
@@ -40,6 +42,12 @@ function Newclass() {
             <option value="III">III</option>
             <option value="IV">IV</option>
           </select>
+          <br/>
+          <label for='prefix_rollno'>Prefix Roll No.</label>
+          <br/>
+          <input type='number' placeholder='Enter prefix roll no'></input>
+          <br/>
+          <span className='info'>* i.e 812021205</span>
           <br></br>
           <label for='semester'>Semester</label>
           <br></br>
@@ -56,7 +64,7 @@ function Newclass() {
 
           </select>
           <br></br>
-          <button>Add</button>
+          <button className='mt-5'>Add</button>
 
         </form>
 

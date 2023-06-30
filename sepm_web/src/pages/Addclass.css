@@ -1,15 +1,13 @@
 .container {
     width: 70vw;
     position: relative;
-    margin-top: 1rem;
+    margin-top: 3rem;
     padding: 1rem 0 0 5rem;
 }
 .container form{
     margin: 40px;
 }
-.container label{
-    margin: 10px;
-}
+
 .container input{
     margin-left: 70px;
     width: 20rem;

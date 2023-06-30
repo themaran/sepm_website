@@ -46,7 +46,6 @@ export const Home = () => {
   return (
     <>
       <Header />
-      <Menu />
 
       <div className='container_own'>
       <h6><b>Welcome back!</b></h6>
