@@ -1,6 +1,18 @@
 .mobile_menu {
     width: 192px;
-    transition: width ease .6s;
+    transition: width 1s;
+    animation: fade .5s ease;
+}
+
+
+@keyframes fade {
+    0% {
+        width: 0px;
+    }    
+
+    100% {
+        width: 192px;
+    }
 }
 
 

@@ -52,7 +52,10 @@ export const Classes = () => {
     const [showAlert, setShowAlert] = useState(false);
     return (
         <>
-            <Header />
+            <div className='grid grid-cols-4 w-full relative top-20 left-0 sm:left-56 h-auto pb-10 pt-2 p-5 sm:p-10'>
+                <h1 className='font-extrabold text-2xl tracking-tight text-gray-800'>Classes</h1>
+            </div>
+            {/* <Header />
             {showAlert ? 
             <>
                 <div className='alert'>
@@ -116,7 +119,7 @@ export const Classes = () => {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> */}
         </>
     )
 }
