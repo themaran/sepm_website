@@ -21,18 +21,18 @@ export const Header = () => {
                         <p className='user_name self-center text-sm'>Manikandan</p>
                     </div>
                 </div>
-                <div className='grid grid-cols-1 justify-items-end content-center'>
+                <div className='grid grid-cols-1 justify-items-end content-center sm:hidden'>
                     <span class="material-symbols-outlined" onClick={()=>setIsNavActive(!isNavActive)}>
                         menu
                     </span>
                 </div>
-                <div className={`absolute top-0 left-0 bottom bg-gray-50 border pl-10 pt-20 h-screen w-48 ${isNavActive ? "block" : "hidden"}`}>
-                    <span class="material-symbols-outlined absolute right-5 top-5" onClick={()=>setIsNavActive(!isNavActive)}>
+                <div className={`mobile_menu sm:hidden absolute top-0 left-0 bg-gray-900 bottom bg-gray-50 borders pl-10 pt-20 h-screen ${isNavActive ? "block" : "hidden"}`}>
+                    <span class="material-symbols-outlined absolute right-5 top-5 text-white" onClick={()=>setIsNavActive(!isNavActive)}>
                         close
                     </span>
                     <ul>
-                        <li className='mb-5 text-sm'>Home</li>
-                        <li className='text-sm'>Classes</li>
+                        <li className='mb-8 text-sm text-white'>Home</li>
+                        <li className='text-sm text-white'>Classes</li>
                     </ul>
                 </div>
             </div>

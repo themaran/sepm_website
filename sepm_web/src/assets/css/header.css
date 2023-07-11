@@ -1,3 +1,10 @@
+.mobile_menu {
+    width: 192px;
+    transition: width ease .6s;
+}
+
+
+
 /* .header {
     position: fixed;
     top: 0;
