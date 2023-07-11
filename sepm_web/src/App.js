@@ -7,20 +7,22 @@ import { Addsemester } from './pages/Addsemester';
 import { Classes } from './pages/Classes';
 import { Class } from './pages/Class';
 import { Edit } from './pages/Edit';
+import { Header } from './components/Header';
 
 
 function App() {
   return (
     <>
       <Router>
+        <Header/>
         <Routes>
-          <Route path='/' element={<Home/>}/>
+          {/* <Route path='/' element={<Home/>}/>
           <Route path="/class/:class/:semester/add_student" element={ <Add/> }/>
           <Route path="/class/:class/:reg_no/edit" element={ <Edit/> }/>
           <Route path="/classes/add_class" element={ <Addclass/> }/>
           <Route path="/add_semester" element={ <Addsemester/> }/>
           <Route path="/classes" element={ <Classes/> }/>
-          <Route path="/class/:class" element={ <Class/> }/>
+          <Route path="/class/:class" element={ <Class/> }/> */}
         </Routes>
       </Router>
     </>
