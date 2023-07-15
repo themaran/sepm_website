@@ -11,3 +11,13 @@ body {
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
+
+label {
+  font-family: 'Manrope', sans-serif;
+  color: var(--secondary-text-color) !important;
+  font-weight: 600 !important;
+}
+
+.delete {
+  background-color:  #DC2626 !important;
+}

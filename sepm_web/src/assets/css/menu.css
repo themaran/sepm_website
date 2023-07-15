@@ -1,4 +1,37 @@
-.menu {
+.menu_link {
+    transition: all .4s ease, border .4s ease;
+}
+
+
+.dropdown_trigger {
+    transition: height .5s;
+}
+
+.dropdown {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+.dropdown.active {
+    display: flex !important;
+    margin-left: 1rem;
+    visibility: visible;
+    opacity: 1;
+}
+
+.arrow {
+    transition: all .5s ease;
+}
+
+.arrow.active {
+    transform: rotate(-90deg);
+}
+
+
+
+/* .menu {
     width: 15vw;
     height: 100vh;
     display: flex;
@@ -70,4 +103,4 @@
     a {
         font-size: .63rem;
     }
-}
+} */

@@ -1,4 +1,23 @@
-.header {
+.mobile_menu {
+    width: 192px;
+    transition: width 1s;
+    animation: fade .5s ease;
+}
+
+
+@keyframes fade {
+    0% {
+        width: 0px;
+    }    
+
+    100% {
+        width: 192px;
+    }
+}
+
+
+
+/* .header {
     position: fixed;
     top: 0;
     left: 0;
@@ -87,4 +106,4 @@
     }
 }
 
-
+ */

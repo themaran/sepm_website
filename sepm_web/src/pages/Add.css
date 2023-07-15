@@ -1,4 +1,4 @@
-.container {
+/* .container {
     margin-top: 2rem !important;
     padding: 5rem 0 0 5rem !important;
 }
@@ -50,7 +50,7 @@ input[value='choose']{
 .container button{
     width: 20rem;
     display: block;
-    /* margin: 0px 11rem; */
+    margin: 0px 11rem;
     padding: 7px;
     border: none;
     outline: none;
@@ -89,4 +89,4 @@ button:hover{
     .container form {
         margin:0px;
     }
-}
+} */
