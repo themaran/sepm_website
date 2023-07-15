@@ -10,7 +10,7 @@ const data = [{
   'department_code': '205',
 }]
 
-export function Add() {
+export function EditStudent() {
   return (
     <>
       <Form />
@@ -40,18 +40,21 @@ function Form() {
           <span class="material-symbols-outlined mr-2 cursor-pointer" onClick={() => navigate(-1)}>
             keyboard_arrow_left
           </span>
-          <h1 className='p-0 m-0 font-extrabold md:text-2xl sm:text-xl text-lg tracking-tight text-gray-800'>Add student</h1>
+          <h1 className='p-0 m-0 font-extrabold md:text-2xl sm:text-xl text-lg tracking-tight text-gray-800'>Edit student</h1>
         </div>
 
         <div className='flex flex-col items-center'>
           <form className=' bg-white p-8 rounded-md sm:w-full md:w-full xl:w-2/3'>
-            <span className='info mb-2 block'>* Reg. no, Year, Semester are fetched automatically. No Need to fill</span>
+            {/* <span className='info mb-2 block'>* Reg. no, Year, Semester are fetched automatically. No Need to fill</span> */}
             <br></br>
             <label for='reg' className='text-base font-medium text-indigo-900 tracking-tight'>Reg. No</label>
             <input type='phone' name='reg' className='w-2/3 lg:w-3/6 h-10 mt-1 border block m-0 p-0 pl-4 rounded-md text-sm outline-none' onChange={(e) => { const input = e.target.value; e.target.value = registerNumber + input.substring(registerNumber.length) }} defaultValue={registerNumber} placeholder='_ _ _' required></input>
             <br />
             <label for='name' className='text-base font-medium text-gray-600 tracking-tight'>Name</label>
             <input type='text' name='name' placeholder='Student Name' className='w-2/3 lg:w-3/6 h-10 mt-1 border block m-0 p-0 pl-4 rounded-md text-sm outline-none' required></input>
+            <br></br>
+            <label for='name' className='text-base font-medium text-gray-600 tracking-tight'>CGPA</label>
+            <input type='text' name='cgpa' placeholder='CGPA' className='w-2/3 lg:w-3/6 h-10 mt-1 border block m-0 p-0 pl-4 rounded-md text-sm outline-none' required></input>
             <br></br>
 
             <label for='category' className='text-base font-medium text-gray-600 tracking-tight'>Category</label>
@@ -91,12 +94,12 @@ function Form() {
               <div className='block md:flex justify-start'>
                 <button className='flex items-center justify-center button mt-4 text-xs lg:text-base'><span class="text-base me-2 material-symbols-outlined">
                   save
-                </span> Save & Create another student</button>
+                </span> Save Changes</button>
               </div>
               <div className='block md:flex'>
-                <button className='flex items-center justify-center button mt-3 text-xs lg:text-base'><span class="text-base me-2 material-symbols-outlined">
-                  add
-                </span> Add</button>
+                <button className='flex items-center justify-center button delete mt-3 text-xs lg:text-base'><span class="text-base me-2 material-symbols-outlined">
+                  delete
+                </span> Delete</button>
               </div>
             </div>
           </form>

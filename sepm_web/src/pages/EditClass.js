@@ -4,15 +4,15 @@ import { Menu } from '../components/Menu';
 import './Addsemester.css';
 import React, { useState } from 'react';
 
-export function Addsemester() {
+export function EditClass() {
   return (
     <>
-      <Newsemester />
+      <EditClassCompontent />
     </>
   );
 }
 
-function Newsemester() {
+function EditClassCompontent() {
   const navigate = useNavigate();
   const [semesterName, setSemesterName] = useState();
   const [inputs, setInputs] = useState([{ subject_code: '', subject_name: '', subject_credit: '' }]);
@@ -62,7 +62,7 @@ function Newsemester() {
           <span class="material-symbols-outlined mr-2 cursor-pointer" onClick={() => navigate(-1)}>
             keyboard_arrow_left
           </span>
-          <h1 className='p-0 m-0 font-extrabold md:text-2xl sm:text-xl text-lg tracking-tight text-gray-800'>New class</h1>
+          <h1 className='p-0 m-0 font-extrabold md:text-2xl sm:text-xl text-lg tracking-tight text-gray-800'>Edit class</h1>
         </div>
 
         {/* Quick Navigation */}
@@ -86,7 +86,7 @@ function Newsemester() {
           {quickMenu == 'semester' ?
             <>
               <form id='form' className='mt-10 bg-white p-16 rounded-md sm:w-full lg:w-1/2' method='post'>
-                <label for='semname' className='text-base font-medium text-gray-600 tracking-tight'>Semester Name</label>
+                <label for='semname' className='text-base font-medium text-gray-600 tracking-tight'>Next Semester Name</label>
                 <input type='text' name='semname' value={semesterName} className='w-2/3 lg:w-3/6 h-10 mt-2 border block m-0 p-0 pl-4 rounded-sm text-sm outline-none' id='semname' onChange={(e) => setSemesterName(e.target.value)} placeholder='Enter Semester Name' required />
                 <h4 className='text-base font-medium text-gray-600 tracking-tight mt-5'>Add Subjects</h4>
                 <span className='info text-gray-300'>* Enter the subject code, name and credits</span>
@@ -106,7 +106,7 @@ function Newsemester() {
                 <button className='button w-48' onClick={() => setQuickMenu('class')}>
                   <span class="text-base mr-2 material-symbols-outlined">
                     save
-                  </span> Save & Next</button>
+                  </span>Create semester</button>
               </div>
             </> :
             <>
@@ -151,7 +151,9 @@ function Newsemester() {
                     <option value='choose' disabled selected hidden>{semesterName}</option>
                   </select>}
                 <br></br>
-                <button className='mt-5  button'>Create new class</button>
+                <button className='mt-5  button'>
+                  <span className='material-symbols-outlined text-base mr-3'>save</span>
+                  Save changes</button>
 
               </form>
             </>}

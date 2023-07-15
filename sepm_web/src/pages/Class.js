@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { Header } from '../components/Header'
 import { Menu } from '../components/Menu'
-import { Link } from 'react-router-dom'
+import { MaterialReactTable } from 'material-react-table';
+import { Box } from '@mui/material';
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 
 const data = [
     {
         'id': 2,
-        'class_name': 'II',
-        'current_semester': 'III',
+        'year': 'II',
+        'semester': 'III',
         'batch': '2021-2025',
         'next_semester': 'IV',
         'current_semester_id': 3,
@@ -23,12 +25,12 @@ let canPromote = true;
 const students = [
     {
         'id': 1,
-        'class_name': 'II',
+        'year': 'II',
         'reg_no': 812021205001,
         'name': 'Abdul Hajeesh',
         'is_calculated': true,
         'sem_id': 3,
-        'current_semester': 'III',
+        'semester': 'III',
         'category': 'A',
         'cgpa': 7.8,
     },
@@ -36,10 +38,10 @@ const students = [
         'id': 2,
         'reg_no': 812021205013,
         'name': 'Elamaran',
-        'class_name': 'II',
+        'year': 'II',
         'is_calculated': true,
         'sem_id': 3,
-        'current_semester': 'III',
+        'semester': 'III',
         'category': 'A',
         'cgpa': 7.8,
     },
@@ -48,10 +50,10 @@ const students = [
         'reg_no': 812021205025,
         'name': 'Manikandan P',
         'category': 'A',
-        'class_name': 'II',
+        'year': 'II',
         'is_calculated': true,
         'sem_id': 3,
-        'current_semester': 'III',
+        'semester': 'III',
         'cgpa': 7.8,
     }
     , {
@@ -59,69 +61,178 @@ const students = [
         'reg_no': 812021205040,
         'name': 'Pravin',
         'category': 'A',
-        'class_name': 'II',
+        'year': 'II',
         'is_calculated': true,
         'sem_id': 3,
-        'current_semester': 'III',
+        'semester': 'III',
         'cgpa': 7.8,
     }
 ]
 
-const semester = [{
-    1: {
-        'class_name': 'I',
-        'next_semester_name': 'II',
-        'next_semester_id': 2,
-    },
-    2: {
-        'class_name': 'I',
-        'next_semester_name': 'III',
-        'next_semester_id': 3,
-    },
-    3: {
-        'class_name': 'II',
-        'semester_name': 'III',
-        'next_semester_name': 'IV',
-        'next_semester_id': 4,
-    },
-    4: {
-        'class_name': 'II',
-        'semester_name': 'IV',
-        'next_semester_name': 'V',
-        'next_semester_id': 5,
-    },
-    5: {
-        'class_name': 'III',
-        'next_semester_name': 'VI',
-        'next_semester_id': 2,
-    },
-    6: {
-        'class_name': 'III',
-        'next_semester_name': 'VII',
-        'next_semester_id': 2,
-    },
-    7: {
-        'class_name': 'IV',
-        'next_semester_name': 'VII',
-        'next_semester_id': 8,
-    },
-    8: {
-        'class_name': 'I',
-        'next_semester_name': 'I',
-        'next_semester_id': 1,
-    }
-}]
+// const semesters = [{ 
+//         'class_name': 'I',
+//         semester: 'I',
+//         'next_semester_name': 'II',
+//         'next_semester_id': 2,
+//     }, {
+//         'class_name': 'I',
+//         semester: 'II',
+//         'next_semester_name': 'III',
+//         'next_semester_id': 3,
+//     },{
+//         'class_name': 'II',
+//         'semester_name': 'III',
+//         semester: 'III',
+//         'next_semester_name': 'IV',
+//         'next_semester_id': 4,
+//     },{
+//         'class_name': 'II',
+//         'semester_name': 'IV',
+//         semester: 'VI',
+//         'next_semester_name': 'V',
+//         'next_semester_id': 5,
+//     },{
+//         'class_name': 'III',
+//         semester: 'V',
+//         'next_semester_name': 'VI',
+//         'next_semester_id': 2,
+//     },{
+//         'class_name': 'III',
+//         semester: 'VI',
+//         'next_semester_name': 'VII',
+//         'next_semester_id': 2,
+//     },{
+//         'class_name': 'IV',
+//         semester: 'VII',
+//         'next_semester_name': 'VII',
+//         'next_semester_id': 8,
+//     },{
+//         'class_name': 'I',
+//         'next_semester_name': 'I',
+//         'next_semester_id': 1,
+//     }
+// ]
 
 export const Class = () => {
 
+    const navigate = useNavigate();
+    const [year, setYear] = useState();
+
+    useEffect(() => {
+        const pathArray = window.location.pathname.split('/');
+        const yearFromURL = pathArray[2];
+        setYear(yearFromURL);
+    }, [])
     const handlePromote = (current_sem) => {
         data[0].current_semester_id = current_sem + 1;
         data[0].next_semester_id = current_sem + 2;
         alert('Class has been promoted. Please refresh the page')
     }
+
+    const columns = useMemo(
+        () => [
+            {
+                accessorKey: 'reg_no', //access nested data with dot notation
+                header: 'Reg No',
+                size: 150,
+            },
+            {
+                accessorKey: 'name',
+                header: 'Name',
+                size: 150,
+            },
+            {
+                accessorKey: 'category', //normal accessorKey
+                header: 'Category',
+                size: 200,
+            },
+            {
+                accessorKey: 'semester',
+                header: 'Semester',
+                size: 150,
+            }
+        ],
+        [],
+    );
     return (
         <>
-            <Header />
+            <div className='bg-gray-100 w-full h-screen relative pt-28 pl-5 pr-5 sm:pl-64'>
+                {/* Page Heading */}
+                <div className='flex mb-5 items-center'>
+                    <span class="material-symbols-outlined mr-2 cursor-pointer" onClick={() => navigate(-1)}>
+                        keyboard_arrow_left
+                    </span>
+                    <h1 className='p-0 m-0 font-extrabold md:text-2xl sm:text-xl text-lg tracking-tight text-gray-800'>{year} YEAR</h1>
+                </div>
+
+
+                <div className='lg:w-full xl:w-11/12 pt-5 grid grid-cols-1 lg:grid-cols-2 justify-between md:pe-5 md:me-5 mt-5'>
+
+                    {/* Class Details */}
+                    <div className=''>
+                        <div className='grid grid-cols-2 lg:grid-cols-4 md:grid-cols-2 sm:ml-0 xl:ml-44'>
+                            <div>
+                                <p className='states text-sm xl:text-base'><b className='text-gray-500'>Year</b></p>
+                                <p className='states text-sm xl:text-base'><b className='text-gray-500'>Smester</b></p>
+                                <p className='states text-sm xl:text-base'><b className='text-gray-500'>Batch</b></p>
+                                <p className='states text-sm xl:text-base'><b className='text-gray-500'>Total Students</b></p>
+                            </div>
+                            <div>
+                                <span className='block text-sm xl:text-base'>: {data[0].year}</span>
+                                <span className='block text-sm xl:text-base'>: {data[0].semester}</span>
+                                <span className='block text-sm xl:text-base'>: {data[0].batch}</span>
+                                <span className='block text-sm xl:text-base'>: {students.length}</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div className='flex justify-center lg:justify-end items-end mt-5 lg:mt-0'>
+                        {students.map((student) => {
+                            if (!student.is_calculated) {
+                                canPromote = false;
+                            }
+                        })}
+
+                        {canPromote ?
+                            <div>
+                                <Link to={'edit' } className='w-56 button text-xs lg:text-base bg-green-500'>
+                                    Edit
+                                </Link>
+                            </div>
+                            :
+                            <></>
+                        }
+                        <div>
+                            <Link to={data[0].semester + '/add_student'} className='button w-52 text-xs lg:text-base'>
+                                <span class="text-base mr-3 material-symbols-outlined">
+                                    person_add
+                                </span> Add student</Link>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div className='flex justify-center mt-10'>
+                    <div className='w-full sm:w-3/4'>
+                        <MaterialReactTable columns={columns} data={students}
+                            enableRowActions
+                            renderRowActions={({ row, table }) => (
+                                <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
+
+                                    {!row.original.is_calculated ? <Link to={row.original.reg_no + '/calculate'} className='link mr-2 text-green-600'>Caluclate</Link> : <></>}
+                                    <Link to={row.original.reg_no + '/edit'} className='text-blue-500'>Edit</Link>
+                                </Box>
+                            )}
+                            positionActionsColumn="last"
+                        />
+                    </div>
+
+                </div>
+
+            </div>
+
+            {/* <Header />
 
             <div className='container_responsive'>
                 <Link to="/classes" className='d-flex align-items-center position link'>
@@ -193,7 +304,7 @@ export const Class = () => {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> */}
         </>
     )
 }

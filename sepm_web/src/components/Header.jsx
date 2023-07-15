@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import { deepOrange } from '@mui/material/colors';
 import MAMCET_logo from '../assets/images/mamcet_logo.jpg'
 import user from '../assets/images/user_picture.jpg'
 import '../assets/css/header.css'
@@ -46,7 +49,7 @@ export const Header = () => {
                                     className='w-1.5 h-1.5 bg-red-500 absolute top-1 left-4 rounded-3xl'></div> : <></>}
                         </div>
                         <div className='flex items-center relative'>
-                            <img src={user} className='w-10 h-10 rounded-full' alt='user profile' />
+                        <Avatar sx={{ bgcolor: deepOrange[500] }}>M</Avatar>
                             <div className='ml-2'>
                                 <p className='user_name self-center font-medium tracking-tight text-sm text-gray-600'>Manikandan</p>
                                 <div className='flex items-center cursor-pointer' onClick={showQuickMenu}>
