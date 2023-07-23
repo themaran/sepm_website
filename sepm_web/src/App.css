@@ -10,14 +10,30 @@
 body {
   overflow-x: hidden;
   scroll-behavior: smooth;
+  /* font-family: 'Manrope', sans-serif !important; */
 }
 
 label {
   font-family: 'Manrope', sans-serif;
   color: var(--secondary-text-color) !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  font-size: 14px !important;
 }
 
 .delete {
   background-color:  #DC2626 !important;
+}
+
+
+.column {
+  float: right;
+  padding: 20px;
+  height: 200px; 
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }

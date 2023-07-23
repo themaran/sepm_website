@@ -1,70 +1,30 @@
 import React, { useState, useMemo } from 'react';
 import { MaterialReactTable } from 'material-react-table';
 import { Link } from 'react-router-dom'
-import {Box } from '@mui/material';
+import { Box } from '@mui/material';
 import '../assets/css/classes.css'
 import '../assets/css/alert.css'
-
-
-const class_data = [
-  {
-    id: 1,
-    class_name: 'I',
-    current_semester: 'I',
-    batch: '2022-2026',
-    total_students: 58,
-    all_clears: 30,
-    regulation: 'REG 21',
-    arrers: 28
-  },
-  {
-    'id': 2,
-    'class_name': 'II',
-    'current_semester': 'III',
-    'batch': '2021-2025',
-    'total_students': 58,
-    'regulation': 'REG 21',
-    'all_clears': 30,
-    'arrers': 28
-  },
-  {
-    'id': 3,
-    'class_name': 'III',
-    'current_semester': 'V',
-    'batch': '2020-2024',
-    'total_students': 58,
-    'regulation': 'REG 19',
-    'all_clears': 30,
-    'arrers': 28
-  },
-  {
-    'id': 4,
-    'class_name': 'IV',
-    'current_semester': 'VII',
-    'batch': '2019-2023',
-    'total_students': 58,
-    'regulation': 'REG 19',
-    'all_clears': 30,
-    'arrers': 28
-  }
-]
+import { Spinner } from '../components/Spinner';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 export const Classes = () => {
-  const [showAlert, setShowAlert] = useState(false);
+  const [spinnerVisible, setSpinnerVisible] = useState(true);
+  const classesData = useSelector((state) => state.classes);
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'class_name', //access nested data with dot notation
+        accessorKey: 'year', //access nested data with dot notation
         header: 'Year',
         size: 150,
       },
       {
-        accessorKey: 'current_semester',
+        accessorKey: 'semester',
         header: 'Semester',
         size: 150,
       },
       {
-        accessorKey: 'regulation', //normal accessorKey
+        accessorKey: 'regulation',
         header: 'Regulation',
         size: 200,
       },
@@ -77,38 +37,57 @@ export const Classes = () => {
     [],
   );
 
+  useEffect(() => {
+    setTimeout(() => {
+      setSpinnerVisible(false)
+    }, 100);
+  }, []);
+
+  console.log(classesData.classes);
   return (
     <>
-      <div className='bg-gray-100 w-full h-screen relative pt-28 pl-5 pr-5 sm:pl-64'>
+      <div className='bg-gray-100 w-full h-screen relative pt-28 pl-5 pr-5 md:pl-64 transition-all'>
         {/* Page Heading */}
-        <h1 className='font-extrabold md:text-2xl sm:text-xl text-lg tracking-tight text-gray-800 mb-5'>Classes</h1>
-        <div className='w-full sm:w-11/12 flex justify-end mb-5 md:pr-10'>
-          <Link to='new-class' className='col-start-2 lg:col-start-2 button w-40' onClick={() => setShowAlert(true)}>
-            <span class="fs-6 material-symbols-outlined">
-              add
-            </span>
-            Add new class</Link>
-        </div>
-        <div className='flex justify-center'>
-          <div className='w-full sm:w-3/4'>
-            <MaterialReactTable columns={columns} data={class_data}
-              enableRowActions
-              renderRowActions={({ row, table }) => (
-                <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
+        <h1 className='font-extrabold sm:text-lg xl:text-xl tracking-tight text-gray-800 mb-5'>Classes</h1>
+        <div className=' mb-5 flex flex-col items-center '>
+          <div className='w-full h-full md:w-3/4'>
 
-                  <Link className='text-blue-400' to={row.original.class_name}>Manage</Link>
-
-                </Box>
-              )}
-              positionActionsColumn="last"
-            />
-          </div>
-
-        </div>
-
-                <div>
-                  <p className='text-gray-400 text-sm absolute right-0 bottom-0'>Current version: 1.2</p>
+            {spinnerVisible ? <Spinner spinner={spinnerVisible} /> :
+              <>
+                <div className='grid grid-cols-1 grid-rows-1 justify-items-end'>
+                  <div className='flex'>
+                    <Link to='new-semester' className='text-white bg-blue-600 rounded-sm flex justify-center items-center w-36 text-xs h-9'>
+                      <span class="text-sm mr-1 material-symbols-outlined">
+                        add
+                      </span>
+                      Add semester</Link>
+                    <Link to='new-class' className='text-white ml-2 col-span-4 bg-blue-600 rounded-sm flex justify-center items-center w-36 text-xs h-9'>
+                      <span class="text-sm mr-1 material-symbols-outlined">
+                        add
+                      </span>
+                      Add class</Link>
+                  </div>
                 </div>
+                <div className='grid grid-cols-1 mt-5 transition-all'>
+                  <MaterialReactTable columns={columns} data={classesData.classes}
+                    enableRowActions
+                    renderRowActions={({ row, table }) => (
+                      <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: '8px' }}>
+
+                        <Link className='text-blue-400' to={row.original.year + '/' + row.original.semester}>Manage</Link>
+
+                      </Box>
+                    )}
+                    positionActionsColumn="last"
+                  />
+                </div>
+
+              </>
+            }
+
+          </div>
+        </div>
+
       </div>
       {/* <Header />
             {showAlert ? 

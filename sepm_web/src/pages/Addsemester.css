@@ -1,3 +1,21 @@
+
+
+
+
+.button {
+    background-color: #1D98D4;
+}
+
+.button:hover {
+    color: #DFE1E5;
+}
+
+.focus-animation {
+    transform: scale(1.01);  
+}
+
+
+
 /* .container {
     width: 70vw;
     margin-top: 7rem !important;
@@ -49,6 +67,7 @@ input::placeholder{
     font-size: 12px;
     font-family: 'Manrope', sans-serif;
  }
+
 
  select {
     font-size: 14px;

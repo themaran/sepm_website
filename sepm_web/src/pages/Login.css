@@ -1,0 +1,23 @@
+.left {
+  background-color: #E2F3FB !important;
+}
+
+.line {
+  background-color: #DFE1E5;
+  height: 1px;
+}
+
+label {
+  color: #495973;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+input {
+  border: 2px solid #DFE1E5;
+  height: 2.7rem;
+  border-radius: 5px;
+  outline: none;
+  padding-left: 10px;
+  font-size: 14px;
+}

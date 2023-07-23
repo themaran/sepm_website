@@ -1,116 +1,43 @@
 import React, { useState } from 'react'
-import { Header } from '../components/Header'
-import { Menu } from '../components/Menu'
 import '../assets/css/home.css'
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setClasses } from './actions/classesAction';
 
-const data = [
-  {
-    'id': 1,
-    'class_name': 'I',
-    'total_students': 58,
-    'all_clears': 30,
-    'arrers': 28
-  },
-  {
-    'id': 2,
-    'class_name': 'II',
-    'total_students': 58,
-    'all_clears': 30,
-    'arrers': 28
-  },
-  {
-    'id': 3,
-    'class_name': 'III',
-    'total_students': 58,
-    'all_clears': 30,
-    'arrers': 28
-  },
-  {
-    'id': 4,
-    'class_name': 'IV',
-    'total_students': 58,
-    'all_clears': 30,
-    'arrers': 28
-  }
-]
-
-const romanNumbers = {
-  'I': [1, 'st'],
-  'II': [2, 'nd'],
-  'III': [3, 'rd'],
-  'IV': [4, 'th']
-}
 
 export const Home = () => {
-
   const [unread, setUnread] = useState([]);
+  const dispatch = useDispatch();
+  const classesData = useSelector((state) => state.classes);
+  const classes = classesData.classes;
+
+
   return (
     <>
 
-      <div className='bg-gray-100 w-full h-screen relative pt-28 pl-5 pr-5 sm:pl-64'>
+      <div className='bg-gray-100 w-full min-h-screen relative pt-28 pl-5 pr-5 md:pl-64'>
         {/* Page Heading */}
-        <h1 className='font-extrabold md:text-2xl sm:text-xl text-lg tracking-tight text-gray-800 mb-5'>Dashboard</h1>
+        <h1 className='font-extrabold sm:text-lg xl:text-xl tracking-tight text-gray-800 mb-5'>Dashboard</h1>
         {/* Grid system */}
-        <div className='grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-6 grid-rows-6 gap-3'>
+        <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-6 gap-3'>
 
-          {/* Grid 1 */}
-          <div className='bg-white grid grid-cols-3 col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-1 border p-5 sm:pl-5 sm:pt-5 sm:pb-5 sm:pr-5 rounded-md'>
-            <div className='flex flex-col justify-center justify-self-center items-center bg-green-200 rounded-full w-7 md:w-8 h-7 md:h-8'>
-              <span class="material-symbols-outlined text-sm">
-                group
-              </span>
-            </div>
-            <div className='col-span-2'>
-              <h2 className='text-gray-400 text-xs font-medium'>I YEAR STUDENTS</h2>
-              <p className='text-xl font-semibold mt-2'>62</p>
-              <Link className='text-sm text-blue-500 mt-2'>Manage</Link>
-            </div>
-          </div>
 
-          {/* Grid 2 */}
-          <div className='bg-white grid grid-cols-3 col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-1 border p-5 sm:pl-5 sm:pt-5 sm:pb-5 sm:pr-5 rounded-md'>
-            <div className='flex flex-col justify-center justify-self-center items-center bg-green-200 rounded-full w-7 md:w-8 h-7 md:h-8'>
-              <span class="material-symbols-outlined text-sm">
-                group
-              </span>
-            </div>
-            <div className='col-span-2'>
-              <h2 className='text-gray-400 text-xs font-medium'>II YEAR STUDENTS</h2>
-              <p className='text-xl font-semibold mt-2'>58</p>
-              <Link className='text-sm text-blue-500 mt-2'>Manage</Link>
-            </div>
-          </div>
-
-          {/* Grid 3 */}
-          <div className='bg-white grid grid-cols-3 col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-1 border p-5 sm:pl-5 sm:pt-5 sm:pb-5 sm:pr-5 rounded-md'>
-            <div className='flex flex-col justify-center justify-self-center items-center bg-green-200 rounded-full w-7 md:w-8 h-7 md:h-8'>
-              <span class="material-symbols-outlined text-sm">
-                group
-              </span>
-            </div>
-            <div className='col-span-2'>
-              <h2 className='text-gray-400 text-xs font-medium'>III YEAR STUDENTS</h2>
-              <p className='text-xl font-semibold mt-2'>55</p>
-              <Link className='text-sm text-blue-500 mt-2'>Manage</Link>
-            </div>
-          </div>
-
-          {/* Grid 4 */}
-          <div className='bg-white grid grid-cols-3 col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-1 border p-5 sm:pl-5 sm:pt-5 sm:pb-5 sm:pr-5 rounded-md'>
-            <div className='flex flex-col justify-center justify-self-center items-center bg-green-200 rounded-full w-7 md:w-8 h-7 md:h-8'>
-              <span class="material-symbols-outlined text-sm">
-                group
-              </span>
-            </div>
-            <div className='col-span-2'>
-              <h2 className='text-gray-400 text-xs font-medium'>IV YEAR STUDENTS</h2>
-              <p className='text-xl font-semibold mt-2'>50</p>
-              <Link className='text-sm text-blue-500 mt-2'>Manage</Link>
-            </div>
-          </div>
-          {/* Grid 5 */}
-          <div className='col-span-2 row-span-2 sm:col-span-4 lg:col-span-2 sm:row-span-2 lg:row-span-3 border rounded-md bg-white pt-8 pl-8'>
+            {Object.values(classes).map((classData, i) => (
+              <div key={i} className="bg-white grid grid-cols-3 border p-5 sm:pl-5 sm:pt-5 sm:pb-5 sm:pr-5 rounded-md">
+                <div className="flex flex-col justify-center justify-self-center items-center bg-green-200 rounded-full w-7 md:w-8 h-7 md:h-8">
+                  <span className="material-symbols-outlined text-sm">group</span>
+                </div>
+                <div className="col-span-2">
+                  <h2 className="text-gray-400 text-xs font-medium">{classData.year} YEAR STUDENTS</h2>
+                  <p className="text-xl font-semibold mt-2">{Object.keys(classData.students).length}</p>
+                  <Link className="text-sm text-blue-500 mt-2">Manage</Link>
+                </div>
+              </div>
+            ))}
+        </div>
+        <div className='grid row-start-2 grid-cols-1 lg:grid-cols-2 gap-5 mt-10'>
+          <div className='border rounded-md bg-white pt-8 pl-8 h-80'>
             <h1 className='font-bold text-xl tracking-tighter text-gray-700'>Notification</h1>
             <div className='grid grid-cols-2 '>
               {
@@ -134,9 +61,8 @@ export const Home = () => {
               }
             </div>
           </div>
-          {/* Grid 6 */}
-          <div className='col-span-2 row-span-2 sm:col-span-4 lg:col-span-3 sm:row-span-2 lg:row-span-3 border rounded-md bg-white pt-8 pl-8'>
-            <h1 className='font-bold text-xl tracking-tighter text-gray-700'>Performance</h1>
+          <div className='border rounded-md bg-white pt-8 pl-8 h-80 mb-10'>
+            <h1 className='font-bold text-xl tracking-tighter text-gray-700'>Notification</h1>
             <div className='grid grid-cols-2 '>
               {
                 unread.length >= 1 ?
@@ -160,7 +86,6 @@ export const Home = () => {
             </div>
           </div>
         </div>
-
       </div>
 
       {/* <div className='container_own'>

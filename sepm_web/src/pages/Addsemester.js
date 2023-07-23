@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Header } from '../components/Header';
-import { Menu } from '../components/Menu';
 import './Addsemester.css';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import MessageNotification from '../components/MessageNotification';
+import Cookies from 'js-cookie';
 
 export function Addsemester() {
   return (
@@ -13,150 +13,226 @@ export function Addsemester() {
 }
 
 function Newsemester() {
-  const navigate = useNavigate();
-  const [semesterName, setSemesterName] = useState();
-  const [inputs, setInputs] = useState([{ subject_code: '', subject_name: '', subject_credit: '' }]);
-  const [quickMenu, setQuickMenu] = useState('semester');
+  const [semester, setSemester] = useState('');
+  const [inputs, setInputs] = useState([
+    { subject_code: '', subject_name: '', subject_credits: '' },
+  ]); const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
+
+  // Function to trigger the message display
+  const showMessage = (type, text) => {
+    setMessage(text);
+    setMessageType(type);
+
+    // Clear the message after a few seconds (e.g., 5 seconds)
+    setTimeout(() => {
+      setMessage('');
+      setMessageType('');
+    }, 5000);
+  };
+
+  // Example functions to trigger the messages
+  const handleSaveChanges = () => {
+    // Simulate changes saved successfully
+    showMessage('success', 'Semester created! You can create another');
+  };
+
+  const handleSomethingWentWrong = () => {
+    // Simulate an error
+    showMessage('error', 'Something went wrong. Please try again later.');
+  };
+
+
+  const handleSemesterSubmit = () => {
+
+    const semesterData = {
+      semester: semester, // Replace "Your Semester Name" with the actual semester name
+      subjects: Object.assign(
+        {},
+        ...inputs.map((input, index) => ({
+          [input.subject_code]: {
+            subject_name: input.subject_name,
+            subject_credits: input.subject_credits,
+          },
+        }))
+      ),
+    };
+
+    // Initial data to send to server
+    let data = { semester: semesterData }
+    const headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `${Cookies.get('accessToken')}`,
+      'User-Agent': 'Semp/1.2',
+      'Host': 'semp.glitch.me',
+      'Cache-Control': 'no-cache',
+      'Origin': `${process.env.REACT_APP_ORIGIN}`,
+      'Connection': 'keep-alive' 
+    };
+
+
+    fetch('https://semp.glitch.me/add_semester', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(data)
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        handleSaveChanges();
+      })
+      .catch((err) => {
+        console.log(err);
+        handleSomethingWentWrong();
+      });
+  }
 
   const handleAddInput = () => {
-    const newInputs = [...inputs, { subject_code: '', subject_name: '', subject_credit: '' }];
-    setInputs(newInputs);
+    setInputs((prevInputs) => [
+      ...prevInputs,
+      { subject_code: '', subject_name: '', subject_credits: '' },
+    ]);
   };
 
   const handleRemoveInput = (index) => {
-    const newInputs = [...inputs];
-    newInputs.splice(index, 1);
-    setInputs(newInputs);
+    setInputs((prevInputs) => {
+      const newInputs = [...prevInputs];
+      newInputs.splice(index, 1);
+      return newInputs;
+    });
   };
 
   const handleInputChange = (index, fieldName, value) => {
-    const newInputs = [...inputs];
-    newInputs[index][fieldName] = value;
-    setInputs(newInputs);
-    console.log(inputs);
+    setInputs((prevInputs) => {
+      const newInputs = [...prevInputs];
+      newInputs[index][fieldName] = value;
+      return newInputs;
+    });
   };
+
+  const inputRefs = useRef([]);
+
+  const handleKeyDown = (event, index, fieldName) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      if (fieldName === 'subject_credit') {
+        focusNextInput(index + 1, 'subject_code');
+      } else {
+        focusNextInput(index, getNextFieldName(fieldName));
+      }
+    }
+  };
+
+  const focusNextInput = (index, fieldName) => {
+    if (index < inputs.length && inputRefs.current[index][fieldName]) {
+      inputRefs.current[index][fieldName].focus();
+    }
+  };
+
+  const getNextFieldName = (currentFieldName) => {
+    if (currentFieldName === 'subject_code') return 'subject_name';
+    if (currentFieldName === 'subject_name') return 'subject_credit';
+    return '';
+  };
+
   const renderInputs = () => {
     return inputs.map((input, index) => (
-      <div key={index} className='mt-5'>
-        <label className='text-sm font-medium text-gray-600 tracking-tight'>Subject {index + 1}</label>
-        <div className='flex'>
-          <input name='subcode' className='w-1/4 h-10 mt-2 border block m-0 p-0 pl-4 rounded-sm text-sm outline-none uppercase' id='subcode1' type='text' placeholder='code' required
-            onChange={(e) => handleInputChange(index, 'subject_code', e.target.value)}></input>
-          <input name='subname' className='w-4/5 h-10 mt-2 border block m-0 p-0 pl-4 rounded-sm text-sm outline-none' id='subname1' placeholder='Subject name' required
-            onChange={(e) => handleInputChange(index, 'subject_name', e.target.value)}></input>
-          <input name='credits' className='w-1/6 h-10 mt-2 border block m-0 p-0 pl-4 rounded-sm text-sm outline-none' id='credits1' placeholder='Credits' required
-            onChange={(e) => handleInputChange(index, 'subject_credit', e.target.value)}></input>
-          {index > 0 ? <button onClick={() => handleRemoveInput(index)}><span className='material-symbols-outlined text-lg mt-3'>delete</span></button> : <></>}
+      <div key={index} className={`mt-5 transition-all duration-500 ${index === inputs.length - 1 ? 'focus-animation' : ''}`}>
+        <label className="text-sm font-medium text-gray-600 tracking-tight">Subject {index + 1}</label>
+        <div>
+          <input
+            name="subcode"
+            className="w-full h-10 mt-1 border block m-0 p-0 pl-4 rounded-md text-sm outline-none uppercase"
+            type="text"
+            placeholder="code"
+            value={input.subject_code}
+            required
+            onChange={(e) => handleInputChange(index, 'subject_code', e.target.value)}
+            onKeyDown={(e) => handleKeyDown(e, index, 'subject_code')}
+            ref={(ref) => {
+              inputRefs.current[index] = { ...inputRefs.current[index], subject_code: ref };
+            }}
+          />
+          <input
+            name="subname"
+            className="w-full h-10 mt-1 border block m-0 p-0 pl-4 rounded-md text-sm outline-none"
+            placeholder="Subject name"
+            value={input.subject_name}
+            required
+            onChange={(e) => handleInputChange(index, 'subject_name', e.target.value)}
+            onKeyDown={(e) => handleKeyDown(e, index, 'subject_name')}
+            ref={(ref) => {
+              inputRefs.current[index] = { ...inputRefs.current[index], subject_name: ref };
+            }}
+          />
+          <input
+            name="credits"
+            className="w-full h-10 mt-1 border block m-0 p-0 pl-4 rounded-md text-sm outline-none"
+            placeholder="Credits"
+            value={input.subject_credits}
+            required
+            onChange={(e) => handleInputChange(index, 'subject_credits', e.target.value)}
+            onKeyDown={(e) => handleKeyDown(e, index, 'subject_credits')}
+            ref={(ref) => {
+              inputRefs.current[index] = { ...inputRefs.current[index], subject_credits: ref };
+            }}
+          />
+          {index > 0 ? (
+            <button onClick={() => handleRemoveInput(index)} className="mt-2 flex items-center text-red-400 text-sm">
+              <span className="text-sm material-symbols-outlined mr-1">Delete</span> Delete
+            </button>
+          ) : null}
         </div>
       </div>
     ));
   };
 
+
+
   return (
     <>
       {/* Container */}
-      <div className='bg-gray-100 w-full min-h-screen relative pt-28 pl-5 pr-5 sm:pl-64'>
+      <div className='bg-gray-100 w-full min-h-screen relative pt-28 pl-5 pr-5 md:pl-64'>
 
         {/* Head of page */}
         <div className='flex mb-5 items-center'>
-          <span class="material-symbols-outlined mr-2 cursor-pointer" onClick={() => navigate(-1)}>
-            keyboard_arrow_left
-          </span>
-          <h1 className='p-0 m-0 font-extrabold md:text-2xl sm:text-xl text-lg tracking-tight text-gray-800'>New class</h1>
+          <Link to={'/classes'} className='mt-1 p-0'>
+            <span class="material-symbols-outlined mr-2 cursor-pointer">
+              keyboard_arrow_left
+            </span>
+          </Link>
+          <h1 className='p-0 m-0 font-extrabold sm:text-lg xl:text-xl tracking-tight text-gray-800'>New Semester</h1>
         </div>
 
-        {/* Quick Navigation */}
         <div className='flex flex-col items-center'>
-          <div className='w-full lg:w-1/2 bg-white border h-16 rounded-full grid grid-cols-2 relative'>
-            <div className='flex items-center justify-self-center cursor-pointer' onClick={() => setQuickMenu('semester')}>
-              <div className='bg-blue-400 w-9 h-9 p-2 rounded-full flex justify-center items-center'>
-                <span className='text-white'>1</span>
-              </div>
-              <span className='text-sm ml-3'>Semester</span>
-              <span className='text-sm text-gray-400'>(Optional)</span>
-            </div>
-            <div className='flex items-center justify-self-center cursor-pointer' onClick={() => setQuickMenu('class')}>
-              <div className='bg-blue-400 w-9 h-9 p-2 rounded-full flex justify-center items-center'>
-                <span className='text-white'>2</span>
-              </div>
-              <span className='text-sm ml-3'>Class Details</span>
-            </div>
-          </div>
-
-          {quickMenu == 'semester' ?
-            <>
-              <form id='form' className='mt-10 bg-white p-16 rounded-md sm:w-full lg:w-1/2' method='post'>
-                <label for='semname' className='text-base font-medium text-gray-600 tracking-tight'>Semester Name</label>
-                <input type='text' name='semname' value={semesterName} className='w-2/3 lg:w-3/6 h-10 mt-2 border block m-0 p-0 pl-4 rounded-sm text-sm outline-none' id='semname' onChange={(e) => setSemesterName(e.target.value)} placeholder='Enter Semester Name' required />
-                <h4 className='text-base font-medium text-gray-600 tracking-tight mt-5'>Add Subjects</h4>
-                <span className='info text-gray-300'>* Enter the subject code, name and credits</span>
-
-                <div className='input_group mt-5'>
+          <form id='form' className={`relative mt-10 bg-white transition-all p-10 rounded-md rounded-b-none w-full lg:w-1/3`} method='post'>
+            <div className='text-start w-full'>
+              <label for='semname' className='text-base font-medium text-gray-600 tracking-tight'>Semester Name</label>
+              <input type='text' name='semname' value={semester} className='w-full h-10 mt-1 border block m-0 p-0 pl-4 rounded-md text-sm outline-none' id='semname' onChange={(e) => setSemester(e.target.value)} placeholder='Enter Semester Name' required />
+              <div className='input_group mt-5 '>
+                <div>
                   {renderInputs()}
                 </div>
-                <button typeof='button' className='hidden'></button>
-              </form>
-
-              <div className='flex justify-center pt-5 bg-white w-full sm:w-full lg:w-1/2'>
-                <button typeof='button' className='button w-48' onClick={handleAddInput}>+ Add subject</button>
+                <div className='pt-5 bg-white'>
+                  <a className='text-sm h-12 cursor-pointer text-blue-500' onClick={handleAddInput}>+ Add subject</a>
+                </div>
               </div>
-
-              <div className='flex justify-center w-full sm:w-full lg:w-1/2 bg-white pt-2 pb-10 rounded-b-md'>
-                <label className=''></label>
-                <button className='button w-48' onClick={() => setQuickMenu('class')}>
-                  <span class="text-base mr-2 material-symbols-outlined">
-                    save
-                  </span> Save & Next</button>
-              </div>
-            </> :
-            <>
-              <form className='mt-10 bg-white p-8 rounded-md sm:w-full lg:w-1/2'>
-                <label for="year" className='text-base font-medium text-gray-600 tracking-tight'>Year</label>
-                <br></br>
-                <select name="year" placeholder='year' className='w-6/12 h-10 mt-2 border block m-0 p-0 pl-4 rounded-sm text-sm outline-none' id="year" required>
-                  <option value='choose' disabled selected hidden>Choose</option>
-                  <option value="I">I</option>
-                  <option value="II">II</option>
-                  <option value="III">III</option>
-                  <option value="IV">IV</option>
-                </select>
-                <br />
-                <label for='name' className='text-base font-medium text-gray-600 tracking-tight'>Regulation</label>
-                <input type='text' name='name' className='w-6/12 h-10 mt-2 border block m-0 p-0 pl-4 rounded-sm text-sm outline-none' placeholder='Enter Regulation' required></input>
-                <br />
-                <label for='name' className='text-base font-medium text-gray-600 tracking-tight'>Batch</label>
-                <input type='text' name='name' className='w-6/12 h-10 mt-2 border block m-0 p-0 pl-4 rounded-sm text-sm outline-none' placeholder='Enter Batch' required></input>
-                <br />
-                <label for='prefix_rollno' className='text-base font-medium text-gray-600 tracking-tight'>Prefix Roll No.</label>
-                <br />
-                <input type='text' className='w-6/12 h-10 mt-2 border block m-0 p-0 pl-4 rounded-sm text-sm outline-none' placeholder='Enter prefix roll no'></input>
-                <span className='info'>i.e 812021205</span>
-                <br></br>
-                <br />
-                <label for='semester' className='text-   font-medium text-gray-600 tracking-tight'>Semester</label>
-                <br></br>
-                {semesterName == null ?
-                  <select name='semester' className='w-6/12 h-10 mt-2 border block m-0 p-0 pl-4 rounded-sm text-sm outline-none' id='semester' required>
-                    <option value='choose' disabled selected hidden>Choose</option>
-                    <option value='I'>I</option>
-                    <option value='II'>II</option>
-                    <option value='III'>III</option>
-                    <option value='IV'>IV</option>
-                    <option value='V'>V</option>
-                    <option value='VI'>VI</option>
-                    <option value='VII'>VII</option>
-                    <option value='VII'>VIII</option>
-                  </select> :
-                  <select name='semester' id='semester' className='w-6/12 h-10 mt-2 border block m-0 p-0 pl-4 rounded-sm text-sm outline-none' required>
-                    <option value='choose' disabled selected hidden>{semesterName}</option>
-                  </select>}
-                <br></br>
-                <button className='mt-5  button'>Create new class</button>
-
-              </form>
-            </>}
-
+            </div>
+          </form>
+          <div className='flex transition-all  justify-center p-10 md:pl-16 md:pr-16 w-full sm:w-full lg:w-1/3 bg-white pt-0 pb-10 rounded-b-md'>
+            <button className={`rounded-sm flex justify-center items-center w-36 h-10 lg:w-44 lg:h-11 text-xs text-white ${ loading == true ? 'bg-blue-300 cursor-not-allowed' : ' bg-blue-500 cursor-pointer'}`} onClick={() => handleSemesterSubmit()}>
+              {loading ? <>Please wait</> : <>Create Now
+                <span className="text-base ml-2 material-symbols-outlined">
+                  add
+                </span></>}
+            </button>
+          </div>
         </div >
+
+        {/* Display the messages */}
+        {message && <MessageNotification type={messageType} message={message} />}
       </div>
     </>
 
